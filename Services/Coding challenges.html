@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>EduVibe - Coding Challenges</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/codemirror.min.css">
+  <style>
+    /* Styling remains same (already correct) */
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      background: linear-gradient(to right, #000428, #004e92);
+      color: #fff;
+    }
+    header {
+      background: rgba(0, 0, 0, 0.6);
+      padding: 1rem 2rem;
+      text-align: center;
+      box-shadow: 0 0 10px #00f7ff;
+    }
+    header h1 {
+      font-size: 2.5rem;
+      margin: 0;
+      text-shadow: 0 0 8px #00f7ff;
+    }
+    .section {
+      padding: 2rem;
+      animation: fadeIn 0.7s ease-in;
+    }
+    .section h2 {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid #00f7ff;
+      text-shadow: 0 0 10px #00f7ff;
+      border-radius: 8px;
+      /* animation: glowBorder 2s infinite alternate; */
+    }
+    @keyframes glowBorder {
+      from { box-shadow: 0 0 10px #00f7ff; }
+      to { box-shadow: 0 0 25px #00f7ff, 0 0 50px #00f7ff; }
+    }
+    .challenge-box {
+      background: rgba(255, 255, 255, 0.05);
+      padding: 1rem;
+      border-radius: 12px;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 0 10px rgba(0,0,0,0.3);
+      transition: transform 0.3s ease;
+    }
+    .challenge-box:hover { transform: scale(1.02); }
+    .challenge-box h3 { margin-top: 0; }
+    .lang-tags { margin-bottom: 1rem; }
+    .lang-tags span {
+      background-color: #00c6ff;
+      padding: 0.2rem 0.6rem;
+      margin-right: 0.5rem;
+      border-radius: 8px;
+      font-size: 0.9rem;
+    }
+    .btn {
+      padding: 0.5rem 1rem;
+      background-color: #00c6ff;
+      color: #000;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      margin-top: 1rem;
+    }
+    .btn:hover { background-color: #00a3cc; }
+    .progress-tracking, .leaderboard, .coming-soon {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 1rem;
+      border-radius: 12px;
+      margin-bottom: 2rem;
+    }
+    .code-snippet {
+      background-color: #111;
+      color: #0f0;
+      padding: 0.8rem;
+      border-radius: 8px;
+      font-family: monospace;
+      overflow-x: auto;
+      margin-top: 0.5rem;
+    }
+    .filter-tabs {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+    .filter-tabs button {
+      padding: 0.6rem 1rem;
+      margin: 0 0.5rem;
+      border: none;
+      background-color: #111;
+      color: #fff;
+      border-radius: 20px;
+      cursor: pointer;
+      box-shadow: 0 0 10px #00f7ff;
+      transition: background-color 0.3s;
+    }
+    .filter-tabs button.active {
+      background-color: #00f7ff;
+      color: #000;
+    }
+    .leaderboard ul { list-style: none; padding-left: 0; }
+    .leaderboard li { margin-bottom: 0.5rem; }
+    .badge {
+      background-color: #ff0;
+      color: #000;
+      padding: 2px 6px;
+      border-radius: 6px;
+      font-size: 0.8rem;
+      margin-left: 10px;
+    }
+    .progress-wrapper {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 999;
+      left: 0; top: 0;
+      width: 100%; height: 100%;
+      background-color: rgba(0,0,0,0.8);
+    }
+    .modal-content {
+      background: #111;
+      color: #fff;
+      padding: 1rem;
+      margin: 5% auto;
+      width: 90%;
+      max-width: 700px;
+      border-radius: 12px;
+      box-shadow: 0 0 20px #00f7ff;
+      position: relative;
+    }
+    .close {
+      position: absolute;
+      right: 15px;
+      top: 10px;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: #fff;
+    }
+    #editor {
+      height: 300px;
+      margin-top: 10px;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+  <header><h1>EduVibe - Coding Challenges</h1></header>
+
+  <div class="section">
+    <h2>Types of Coding Questions</h2>
+
+    <div class="filter-tabs">
+      <button class="active" onclick="filterChallenges('all', this)">All</button>
+      <button onclick="filterChallenges('easy', this)">Easy</button>
+      <button onclick="filterChallenges('medium', this)">Medium</button>
+      <button onclick="filterChallenges('hard', this)">Hard</button>
+    </div>
+
+    <div class="challenge-box easy">
+      <h3>Easy - Print Even Numbers</h3>
+      <div class="lang-tags"><span>Python</span><span>Java</span><span>C++</span></div>
+      <p>Write a program to print even numbers from 1 to 100.</p>
+      <div class="code-snippet">for i in range(1, 101):<br> &nbsp;&nbsp;if i % 2 == 0:<br> &nbsp;&nbsp;&nbsp;&nbsp;print(i)</div>
+      <button class="btn" onclick="openEditor(`for i in range(1, 101):\n  if i % 2 == 0:\n    print(i)`)">Try It Now</button>
+    </div>
+
+    <div class="challenge-box medium">
+      <h3>Medium - Palindrome Checker</h3>
+      <div class="lang-tags"><span>Python</span><span>JavaScript</span></div>
+      <p>Check whether a given string is a palindrome or not.</p>
+      <div class="code-snippet">def is_palindrome(s):<br>&nbsp;&nbsp;return s == s[::-1]</div>
+      <button class="btn" onclick="openEditor(`def is_palindrome(s):\n  return s == s[::-1]`)">Try It Now</button>
+    </div>
+
+    <div class="challenge-box hard">
+      <h3>Hard - Find All Pairs With Given Sum</h3>
+      <div class="lang-tags"><span>C++</span><span>Java</span></div>
+      <p>Find all pairs in an array that sum up to a target value.</p>
+      <div class="code-snippet">
+        int arr[] = {1, 4, 5, 7};<br>
+        int sum = 6;<br>
+        for(int i = 0; i &lt; n; i++) {<br>
+        &nbsp;&nbsp;for(int j = i+1; j &lt; n; j++) {<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;if(arr[i] + arr[j] == sum) {<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cout &lt;&lt; arr[i] &lt;&lt; "," &lt;&lt; arr[j] &lt;&lt; endl;<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+        &nbsp;&nbsp;}<br>
+        }
+      </div>
+      <button class="btn" onclick="openEditor(`int arr[] = {1, 4, 5, 7};\nint sum = 6;\nfor(int i = 0; i < n; i++) {\n  for(int j = i+1; j < n; j++) {\n    if(arr[i] + arr[j] == sum) {\n      cout << arr[i] << ',' << arr[j] << endl;\n    }\n  }\n}`)">Try It Now</button>
+    </div>
+  </div>
+
+  <div class="section progress-tracking">
+    <h2>Progress Tracking</h2>
+    <div class="progress-wrapper">
+      <progress value="45" max="100"></progress>
+      <span><strong>45%</strong></span>
+    </div>
+  </div>
+
+  <div class="section leaderboard">
+    <h2>Leaderboard</h2>
+    <ul>
+      <li>1. Ritik <span class="badge">Pro</span> - 350 pts</li>
+      <li>2. Anika <span class="badge">Advanced</span> - 300 pts</li>
+      <li>3. Yash <span class="badge">Intermediate</span> - 270 pts</li>
+    </ul>
+  </div>
+
+  <div class="section coming-soon">
+    <h2>Submission System (Coming Soon)</h2>
+    <p>We are working on automatic submission & test-case evaluation system.</p>
+  </div>
+
+  <!-- Code Editor Modal -->
+  <div class="modal" id="editorModal">
+    <div class="modal-content">
+      <span class="close" onclick="closeEditor()">&times;</span>
+      <h3>Code Editor</h3>
+      <textarea id="editor"></textarea>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/codemirror.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/javascript/javascript.min.js"></script>
+  <script>
+    let editor;
+    function openEditor(code) {
+      document.getElementById("editorModal").style.display = "block";
+      if (!editor) {
+        editor = CodeMirror.fromTextArea(document.getElementById("editor"), {
+          lineNumbers: true,
+          mode: "javascript",
+          theme: "default"
+        });
+      }
+      editor.setValue(code);
+    }
+    function closeEditor() {
+      document.getElementById("editorModal").style.display = "none";
+    }
+
+    function filterChallenges(level, btn) {
+      document.querySelectorAll('.filter-tabs button').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      document.querySelectorAll('.challenge-box').forEach(box => {
+        box.style.display = (level === 'all' || box.classList.contains(level)) ? 'block' : 'none';
+      });
+    }
+  </script>
+</body>
+</html>

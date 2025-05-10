@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EduVibe Quiz Battle</title>
+    <style>
+        body {
+            background: #121212;
+            color: #e0e0e0;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            flex-direction: column;
+        }
+
+        .container {
+            background-color: #212121;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            max-width: 1200px;
+            width: 100%;
+            display: flex;
+        }
+
+        .player-container {
+            width: 50%;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #64b5f6;
+        }
+
+        h2 {
+            color: #9ccc65;
+            margin-top: 20px;
+        }
+
+        .player {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .player-name {
+            font-size: 18px;
+            margin-right: 10px;
+        }
+
+        .score {
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .question {
+            margin-bottom: 20px;
+        }
+
+        .options label {
+            display: block;
+            margin-bottom: 10px;
+            cursor: pointer;
+        }
+
+        button {
+            background-color: #00bcd4;
+            color: #212121;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        button:hover {
+            background-color: #00acc1;
+        }
+
+        #result {
+            text-align: center;
+            font-size: 20px;
+            margin-top: 20px;
+        }
+
+        #timer {
+            font-size: 18px;
+            font-weight: bold;
+            text-align: center;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="player-container">
+            <h1>Player 1</h1>
+            <div class="player">
+                <div class="player-name" id="player1Name">Player 1:</div>
+                <div class="score" id="player1Score">0</div>
+            </div>
+            <div class="question" id="player1Question"></div>
+            <button onclick="checkAnswer(1)">Submit Answer</button>
+            <div id="timer1">Time Left: <span id="timeLeft1">30</span> seconds</div>
+            <div id="result1"></div>
+        </div>
+
+        <div class="player-container">
+            <h1>Player 2</h1>
+            <div class="player">
+                <div class="player-name" id="player2Name">Player 2:</div>
+                <div class="score" id="player2Score">0</div>
+            </div>
+            <div class="question" id="player2Question"></div>
+            <button onclick="checkAnswer(2)">Submit Answer</button>
+            <div id="timer2">Time Left: <span id="timeLeft2">30</span> seconds</div>
+            <div id="result2"></div>
+        </div>
+    </div>
+
+    <script>
+        const questions = [
+            { question: "What does HTML stand for?", options: ["Hyper Text Markup Language", "Highly Technical Markup Language", "Home Tool Markup Language"], answer: 0 },
+            { question: "Who is the creator of JavaScript?", options: ["Brendan Eich", "Tim Berners-Lee", "James Gosling"], answer: 0 },
+            { question: "What is the correct syntax for referring to an external script called 'xxx.js'?", options: ["<script name='xxx.js'>", "<script src='xxx.js'>", "<script href='xxx.js'>"], answer: 1 },
+            { question: "How do you write 'Hello World' in an alert box?", options: ["alert('Hello World');", "msg('Hello World');", "alertBox('Hello World');"], answer: 0 },
+            { question: "How do you create a function in JavaScript?", options: ["function myFunction()", "function = myFunction()", "function:myFunction()"], answer: 0 },
+            { question: "Which of the following is a valid type of function javascript supports?", options: ["named function", "anonymous function", "Both of the above"], answer: 2 },
+            { question: "Which built-in method returns the character at the specified index?", options: ["characterAt()", "getCharAt()", "charAt()"], answer: 2 },
+            { question: "Which built-in method combines the text of two strings and returns a new string?", options: ["append()", "concat()", "attach()"], answer: 1 },
+            { question: "Which of the following function of String object returns the index within the calling String object of the first occurrence of the specified value?", options: ["substr()", "search()", "indexOf()"], answer: 2 },
+            { question: "Which of the following function of Array object removes the last element from an array and returns that element?", options: ["pop()", "push()", "join()"], answer: 0 }
+        ];
+
+        let currentQuestion1 = 0;
+        let currentQuestion2 = 0;
+        let player1Score = 0;
+        let player2Score = 0;
+        let timeLeft1 = 30;
+        let timeLeft2 = 30;
+        let timerInterval1;
+        let timerInterval2;
+        let player1Finished = false;
+        let player2Finished = false;
+
+        function loadQuestion(player) {
+            const questionData = questions[player === 1 ? currentQuestion1 : currentQuestion2];
+            const questionContainer = document.getElementById(`player${player}Question`);
+            const timeLeftSpan = document.getElementById(`timeLeft${player}`);
+
+            const optionsHtml = questionData.options.map((option, index) => `
+                <label>
+                    <input type="radio" name="answer${player}" value="${index}"> ${option}
+                </label>
+            `).join('');
+
+            questionContainer.innerHTML = `
+                <h2>Question ${player === 1 ? currentQuestion1 + 1 : currentQuestion2 + 1}:</h2>
+                <p>${questionData.question}</p>
+                <div class="options">${optionsHtml}</div>
+            `;
+
+            const timeLeft = player === 1 ? timeLeft1 : timeLeft2;
+            timeLeftSpan.textContent = timeLeft;
+
+            clearInterval(player === 1 ? timerInterval1 : timerInterval2);
+            const timerInterval = setInterval(() => {
+                if (player === 1) {
+                    timeLeft1--;
+                    timeLeftSpan.textContent = timeLeft1;
+                    if (timeLeft1 <= 0) {
+                        clearInterval(timerInterval);
+                        checkAnswer(player); // Automatically check the answer if time runs out
+                    }
+                } else {
+                    timeLeft2--;
+                    timeLeftSpan.textContent = timeLeft2;
+                    if (timeLeft2 <= 0) {
+                        clearInterval(timerInterval);
+                        checkAnswer(player); // Automatically check the answer if time runs out
+                    }
+                }
+            }, 1000);
+
+            if (player === 1) {
+                timerInterval1 = timerInterval;
+            } else {
+                timerInterval2 = timerInterval;
+            }
+        }
+
+        function checkAnswer(player) {
+            const selectedAnswer = document.querySelector(`input[name="answer${player}"]:checked`);
+            if (selectedAnswer) {
+                const answerIndex = parseInt(selectedAnswer.value);
+                const correctAnswerIndex = questions[player === 1 ? currentQuestion1 : currentQuestion2].answer;
+                if (answerIndex === correctAnswerIndex) {
+                    if (player === 1) {
+                        player1Score++;
+                        document.getElementById("player1Score").textContent = player1Score;
+                    } else {
+                        player2Score++;
+                        document.getElementById("player2Score").textContent = player2Score;
+                    }
+                }
+
+                if (player === 1) {
+                    currentQuestion1++;
+                    if (currentQuestion1 < questions.length) {
+                        loadQuestion(player);
+                    } else {
+                        player1Finished = true;
+                        if (player2Finished) {
+                            showFinalResults();
+                        }
+                    }
+                } else {
+                    currentQuestion2++;
+                    if (currentQuestion2 < questions.length) {
+                        loadQuestion(player);
+                    } else {
+                        player2Finished = true;
+                        if (player1Finished) {
+                            showFinalResults();
+                        }
+                    }
+                }
+            } else {
+                alert(`Player ${player} - Please select an answer.`);
+            }
+        }
+
+        function showFinalResults() {
+            const finalResults = document.createElement("div");
+            finalResults.innerHTML = `
+                <h2>Quiz Battle Finished</h2>
+                <p>Player 1 Score: ${player1Score}</p>
+                <p>Player 2 Score: ${player2Score}</p>
+                <p>${player1Score > player2Score ? "Player 1 Wins!" : (player2Score > player1Score ? "Player 2 Wins!" : "It's a Tie!")}</p>
+                <button onclick="resetGame()">Play Again</button>
+            `;
+            document.body.appendChild(finalResults);
+        }
+
+        function resetGame() {
+            currentQuestion1 = 0;
+            currentQuestion2 = 0;
+            player1Score = 0;
+            player2Score = 0;
+            timeLeft1 = 30;
+            timeLeft2 = 30;
+            player1Finished = false;
+            player2Finished = false;
+            document.getElementById("player1Score").textContent = player1Score;
+            document.getElementById("player2Score").textContent = player2Score;
+            document.getElementById("result1").innerHTML = "";
+            document.getElementById("result2").innerHTML = "";
+            document.body.removeChild(document.querySelector("div"));
+            loadQuestion(1);
+            loadQuestion(2);
+        }
+
+        const player1Name = prompt("Enter Player 1 Name:");
+        const player2Name = prompt("Enter Player 2 Name:");
+        document.getElementById("player1Name").textContent = player1Name + ":";
+        document.getElementById("player2Name").textContent = player2Name + ":";
+
+        loadQuestion(1);
+        loadQuestion(2);
+    </script>
+</body>
+</html>

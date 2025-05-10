@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EduVibe - Community & Collaboration</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to right, #000428, #004e92);
+      color: #fff;
+    }
+
+    header {
+      background: rgba(0, 0, 0, 0.6);
+      padding: 1.5rem;
+      text-align: center;
+      border-bottom: 2px solid #00c6ff;
+    }
+
+    header h1 {
+      font-size: 2.8rem;
+      margin: 0;
+      color: #00c6ff;
+      text-shadow: 0 0 10px #00c6ff, 0 0 20px #00c6ff;
+    }
+
+    .section {
+      padding: 2rem;
+    }
+
+    .section h2 {
+      font-size: 2rem;
+      padding-bottom: 0.5rem;
+      margin-bottom: 1.5rem;
+      border-bottom: 2px solid #00c6ff;
+      position: relative;
+      color: #00c6ff;
+      /* text-shadow: 0 0 10px #00c6ff, 0 0 20px #00c6ff; */
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.4);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .card:hover {
+      transform: scale(1.02);
+      box-shadow: 0 0 25px rgba(0, 198, 255, 0.5);
+    }
+
+    .card h3 {
+      margin-top: 0;
+      color: #00eaff;
+      /* text-shadow: 0 0 6px #00eaff; */
+    }
+
+    .btn {
+      background-color: #00c6ff;
+      color: #000;
+      padding: 0.6rem 1.2rem;
+      border: none;
+      border-radius: 10px;
+      margin-top: 1rem;
+      cursor: pointer;
+      font-weight: bold;
+      box-shadow: 0 0 8px #00c6ff;
+      transition: background 0.3s ease, transform 0.2s ease;
+    }
+
+    .btn:hover {
+      background-color: #00a3cc;
+      transform: scale(1.05);
+    }
+
+    footer {
+      text-align: center;
+      padding: 1rem;
+      background: rgba(0, 0, 0, 0.5);
+      color: #ccc;
+      border-top: 1px solid #00c6ff;
+      font-size: 0.9rem;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      header h1 {
+        font-size: 2rem;
+      }
+
+      .section h2 {
+        font-size: 1.6rem;
+      }
+
+      .card {
+        padding: 1rem;
+      }
+
+      .btn {
+        font-size: 0.9rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .section {
+        padding: 1rem;
+      }
+
+      header h1 {
+        font-size: 1.8rem;
+      }
+
+      .section h2 {
+        font-size: 1.4rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <h1>EduVibe - Community & Collaboration</h1>
+  </header>
+
+  <div class="section">
+    <h2>Discussion Forums</h2>
+    <div class="card">
+      <h3>Join Topic-Based Discussions</h3>
+      <p>Engage in forums on AI, Cybersecurity, Web Dev, and more. Ask questions, share insights, or help peers.</p>
+      <button class="btn" aria-label="Start a new discussion">Start Discussion</button>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>Peer Collaboration</h2>
+    <div class="card">
+      <h3>Team Up for Projects & Hackathons</h3>
+      <p>Find coding buddies, team up for challenges, and build awesome projects together.</p>
+      <button class="btn" aria-label="Find a project partner">Find Project Partner</button>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>Events & Meetups</h2>
+    <div class="card">
+      <h3>Attend Virtual Tech Events</h3>
+      <p>Join webinars, community talks, and workshops to connect with fellow learners.</p>
+      <button class="btn" aria-label="View upcoming events">View Upcoming Events</button>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>Open Source Contributions</h2>
+    <div class="card">
+      <h3>Collaborate on Real Projects</h3>
+      <p>Browse student-driven open-source projects and contribute to GitHub repositories.</p>
+      <button class="btn" aria-label="Explore open source projects">Explore Projects</button>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>Community Announcements</h2>
+    <div class="card">
+      <h3>Stay Updated</h3>
+      <p>Read important announcements, updates, and new feature releases.</p>
+      <button class="btn" aria-label="Read community updates">View Updates</button>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>Shared Resources</h2>
+    <div class="card">
+      <h3>Community Knowledge Base</h3>
+      <p>Access notes, templates, guides, and bookmarks shared by peers.</p>
+      <button class="btn" aria-label="Browse shared resources">Browse Resources</button>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>Recognition & Badges</h2>
+    <div class="card">
+      <h3>Celebrate Contributions</h3>
+      <p>Top contributors get featured with community badges and leaderboard scores.</p>
+      <button class="btn" aria-label="View leaderboard and badges">View Leaderboard</button>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>Community Guidelines</h2>
+    <div class="card">
+      <h3>Respect & Collaboration</h3>
+      <p>Our community thrives on support and respect. Follow guidelines for a safe space.</p>
+      <button class="btn" aria-label="Read community guidelines">Read Guidelines</button>
+    </div>
+  </div>
+
+  <footer>
+    © 2025 EduVibe | Community & Collaboration Hub. All rights reserved.
+  </footer>
+</body>
+
+</html>

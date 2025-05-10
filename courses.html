@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>EduVibe</title>
+  <style>
+    /* Reset */
+    body, h1, h2, h3, p, ul, li {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: linear-gradient(135deg, #1A1A2E, #16213E, #0F3460);
+  font-family: 'Poppins', sans-serif;
+  color: white;
+}
+
+
+/* Navbar Styles */
+nav {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 40px;
+  background: black;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  flex-wrap: wrap;
+}
+
+.logo {
+  font-size: 24px;
+  font-weight: bold;
+  color: white;
+}
+
+.nav-links {
+  display: flex;
+  list-style: none;
+  align-items: center;
+  gap: 25px;
+}
+
+.nav-links li a {
+  text-decoration: none;
+  color: white;
+  font-weight: bold;
+  font-size: 14px;
+  padding: 6px 10px;
+  transition: 0.3s;
+}
+
+.nav-links li a:hover {
+  color: #ffde03;
+}
+
+/* Register Button Styling */
+#registerBtn {
+  background-color: #00ffc3;
+      border: none;
+      padding: 10px 15px;
+      font-size: 16px;
+      color: #000;
+      font-weight: bold;
+      cursor: pointer;
+      border-radius: 4px;
+      /* box-shadow: 0 0 10px #00ffc3; */
+      transition: background-color 0.3s;
+}
+
+#registerBtn:hover {
+  background-color: #ffde03;
+  /* box-shadow: 0 0 15px #00ffe0; */
+}
+
+
+/* Hamburger Menu */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  cursor: pointer;
+}
+
+.hamburger span {
+  height: 3px;
+  width: 25px;
+  background: white;
+  border-radius: 3px;
+  transition: 0.3s ease-in-out;
+}
+
+/* Responsive Styles */
+@media (max-width: 992px) {
+  .hamburger {
+    display: flex;
+  }
+
+  .nav-links {
+    position: absolute;
+    top: 70px;
+    left: 0;
+    width: 100%;
+    background: #000000ee;
+    flex-direction: column;
+    align-items: center;
+    display: none;
+    padding: 20px 0;
+    gap: 20px;
+  }
+
+  .nav-links.active {
+    display: flex;
+  }
+
+  #registerBtn, #loginBtn {
+    width: 80%;
+    text-align: center;
+  }
+}
+
+@media (max-width: 600px) {
+  nav {
+    padding: 12px 20px;
+  }
+
+  .logo {
+    font-size: 20px;
+  }
+
+  .nav-links li a {
+    font-size: 13px;
+  }
+
+  #registerBtn, #loginBtn {
+    font-size: 13px;
+    padding: 7px 12px;
+  }
+
+  .hamburger span {
+    width: 22px;
+  }
+}
+
+    /* Hero Section */
+    .hero {
+      text-align: center;
+      padding: 80px 20px;
+      background: linear-gradient(135deg, #0ff2, #f0f2, #0ff2);
+      color: #fff;
+    }
+
+    .hero h1 {
+      font-size: 48px;
+      letter-spacing: 2px;
+      color: #00ffff;
+    }
+
+    .hero p {
+      font-size: 20px;
+      margin-top: 15px;
+      color: #e0f7ff;
+    }
+
+    @media (max-width: 600px) {
+      .hero h1 {
+        font-size: 34px;
+      }
+      .hero p {
+        font-size: 16px;
+      }
+    }
+
+    /* Course Section */
+    .course-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+      padding: 40px 20px;
+    }
+
+    .course {
+      background-color: #1a1a1a;
+      border: 1px solid #00ffe0;
+      border-radius: 12px;
+      padding: 25px;
+      box-shadow: 0 0 15px #00ffc33a;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .course:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 0 15px #00ffe0;
+    }
+
+    .course h3 {
+      font-size: 22px;
+      margin-bottom: 12px;
+      color: #00f7ff;
+    }
+
+    .subcourses {
+      margin-top: 10px;
+    }
+
+    .subcourse {
+      font-size: 16px;
+      color: #ccc;
+      margin: 6px 0;
+      cursor: pointer;
+      transition: color 0.3s;
+    }
+
+    .subcourse:hover {
+      color: rgb(238, 255, 0);
+    }
+  </style>
+</head>
+<body>
+  <!-- Navigation -->
+  <nav>
+    <div class="logo"><a href="index.html" style="text-decoration: none;">EduVibe</a></div>
+
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="aboutUs.html">About Us</a></li>
+      <li><a href="courses.html">Courses</a></li>
+      <li><a href="competition.html">Competitions</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li><a href="register.html" id="registerBtn">Register</a></li>
+    </ul>
+
+    <div class="hamburger" id="hamburger">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <div class="hero">
+    <h1>Welcome to EduVibe</h1>
+    <p>Your gateway to the world of knowledge and skills.</p>
+  </div>
+
+  <!-- Course Section -->
+  <div class="course-container">
+    <div class="course">
+      <h3><a href="E-courses/Aiml.html" style="text-decoration: none; color: #00f7ff;">AI & Machine Learning</a></h3>
+      <div class="subcourses">
+        <div class="subcourse">Introduction to AI</div>
+        <div class="subcourse">Supervised Learning</div>
+        <div class="subcourse">Deep Learning</div>
+      </div>
+    </div>
+
+    <div class="course">
+      <h3><a href="E-courses/Blockchain.html" style="text-decoration: none; color: #00f7ff;">Blockchain Development</a></h3>
+      <div class="subcourses">
+        <div class="subcourse">Blockchain Basics</div>
+        <div class="subcourse">Ethereum Development</div>
+        <div class="subcourse">Smart Contracts</div>
+      </div>
+    </div>
+
+    <div class="course">
+      <h3><a href="E-courses/cloud.html" style="text-decoration: none; color: #00f7ff;">Cloud Computing & DevOps</a></h3>
+      <div class="subcourses">
+        <div class="subcourse">AWS Basics</div>
+        <div class="subcourse">Azure Fundamentals</div>
+        <div class="subcourse">Docker & Kubernetes</div>
+      </div>
+    </div>
+
+    <div class="course">
+      <h3><a href="E-courses/Cybersecurity.html" style="text-decoration: none; color: #00f7ff;">Cybersecurity & Hacking</a></h3>
+      <div class="subcourses">
+        <div class="subcourse">Penetration Testing</div>
+        <div class="subcourse">Network Security</div>
+        <div class="subcourse">Cryptography</div>
+      </div>
+    </div>
+
+    <div class="course">
+      <h3><a href="E-courses/Digital marketing.html" style="text-decoration: none; color: #00f7ff;"><h3>Digital Marketing & SEO</h3></a></h3>
+      <div class="subcourses">
+        <div class="subcourse">SEO Strategies</div>
+        <div class="subcourse">Social Media Marketing</div>
+        <div class="subcourse">Google Ads</div>
+      </div>
+    </div>
+
+    <div class="course">
+      <h3><a href="E-courses/Full stack.html" style="text-decoration: none; color: #00f7ff;"><h3>Full Stack Web Devlopment</h3></a></h3>
+      <div class="subcourses">
+        <div class="subcourse">Frontend Development</div>
+        <div class="subcourse">Backend Development</div>
+        <div class="subcourse">Database Management</div>
+      </div>
+    </div>
+
+    <div class="course">
+      <h3><a href="E-courses/Game development.html" style="text-decoration: none; color: #00f7ff;"><h3>Game Development</h3></a></h3>
+      <div class="subcourses">
+        <div class="subcourse">Unity</div>
+        <div class="subcourse">Unreal Engine</div>
+        <div class="subcourse">AR/VR</div>
+      </div>
+    </div>
+
+    <div class="course">
+      <h3><a href="E-courses/Graphic designing.html" style="text-decoration: none; color: #00f7ff;"><h3>Graphic Design & UI/UX</h3></a></h3>
+      <div class="subcourses">
+        <div class="subcourse">Photoshop</div>
+        <div class="subcourse">Figma</div>
+        <div class="subcourse">UX Design</div>
+      </div>
+    </div>
+
+    <div class="course">
+      <h3><a href="E-courses/IoT.html" style="text-decoration: none; color: #00f7ff;"><h3>Internet of Things (IoT)</h3></a></h3>
+      <div class="subcourses">
+        <div class="subcourse">Arduino</div>
+        <div class="subcourse">Raspberry PI</div>
+        <div class="subcourse">IoT Security</div>
+      </div>
+    </div>
+
+    <div class="course">
+      <h3><a href="E-courses/Data analytics.html" style="text-decoration: none; color: #00f7ff;"><h3>Data Analytics</h3></a></h3>
+      <div class="subcourses">
+        <div class="subcourse">Power BI</div>
+        <div class="subcourse">Excel</div>
+        <div class="subcourse">Tableau</div>
+      </div>
+    </div>
+
+    <div class="course">
+      <h3><a href="E-courses/Data science.html" style="text-decoration: none; color: #00f7ff;"><h3>Data Science and Big data</h3></a></h3>
+      <div class="subcourses">
+        <div class="subcourse">Python</div>
+        <div class="subcourse">SQL</div>
+        <div class="subcourse">Numpy</div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function toggleMenu() {
+      const navLinks = document.getElementById('navLinks');
+      navLinks.classList.toggle('active');
+    }
+  </script>
+</body>
+</html>

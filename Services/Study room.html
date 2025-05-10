@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Virtual Study Room</title>
+  <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', sans-serif;
+    }
+    body {
+      background: #0f0f1b;
+      color: white;
+      overflow-x: hidden;
+    }
+    #bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: -1;
+    }
+    header {
+      padding: 1rem 2rem;
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(10px);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    header h1 {
+      font-size: 1.8rem;
+      color: #0ff;
+    }
+    .hero {
+      height: 90vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      text-align: center;
+      padding: 2rem;
+    }
+    .hero h2 {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      color: #fff;
+    }
+    .hero p {
+      font-size: 1.2rem;
+      color: #ccc;
+      max-width: 600px;
+    }
+    .features {
+      display: flex;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      gap: 1rem;
+      padding: 2rem;
+    }
+    .feature {
+      flex: 0 0 300px;
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(5px);
+      border-radius: 16px;
+      scroll-snap-align: start;
+      padding: 2rem;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 0 10px #0ff5;
+      transition: transform 0.3s;
+    }
+    .feature:hover {
+      transform: translateY(-10px);
+    }
+    .feature i {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+      color: #0ff;
+    }
+    footer {
+      text-align: center;
+      padding: 2rem;
+      color: #888;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      margin-top: 2rem;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="bg"></canvas>
+  <header>
+    <h1><i class="fas fa-users"></i> Virtual Study Room</h1>
+  </header>
+
+  <section class="hero" data-aos="fade-up">
+    <h2>Collaborate. Focus. Achieve.</h2>
+    <p>Join or create a virtual study room, work with peers in real-time, use shared tools, and make learning interactive and fun!</p>
+  </section>
+
+  <section class="features">
+    <div class="feature" data-aos="zoom-in" data-aos-delay="100">
+      <a href="/roomstudy/studyroom.html" style="text-decoration: none; color: white;">
+        <i class="fas fa-video"></i>
+      <h3>Video & Audio Chat</h3>
+      <p>Engage in seamless real-time conversations while studying with your peers.</p>
+      </a>
+    </div>
+    <div class="feature" data-aos="zoom-in" data-aos-delay="200">
+      <a href="/roomstudy/studyroom.html" style="text-decoration: none; color: white;">
+        <i class="fas fa-chalkboard"></i>
+      <h3>Shared Whiteboard</h3>
+      <p>Visualize and solve problems together using the interactive whiteboard.</p>
+      </a>
+    </div>
+    <div class="feature" data-aos="zoom-in" data-aos-delay="300">
+      <a href="/roomstudy/studyroom.html" style="text-decoration: none; color: white;">
+        <i class="fas fa-clock"></i>
+      <h3>Pomodoro Timer</h3>
+      <p>Stay focused and productive with the built-in Pomodoro productivity timer.</p>
+      </a>
+    </div>
+    <div class="feature" data-aos="zoom-in" data-aos-delay="400">
+      <i class="fas fa-award"></i>
+      <h3>Gamification</h3>
+      <p>Earn points and badges for consistent study sessions and collaboration.</p>
+    </div>
+  </section>
+
+  <footer>
+    <p>&copy; 2025 Virtual Study Room. Designed by Ritik.</p>
+  </footer>
+
+  <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+  <script>
+    AOS.init();
+  </script>
+  <script>
+    const canvas = document.getElementById("bg");
+    const ctx = canvas.getContext("2d");
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    const stars = Array(150).fill().map(() => ({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height,
+      r: Math.random() * 1.5,
+      dx: (Math.random() - 0.5) * 0.5,
+      dy: (Math.random() - 0.5) * 0.5
+    }));
+
+    function animate() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = "#0ff";
+      stars.forEach(s => {
+        ctx.beginPath();
+        ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+        ctx.fill();
+        s.x += s.dx;
+        s.y += s.dy;
+        if (s.x < 0 || s.x > canvas.width) s.dx *= -1;
+        if (s.y < 0 || s.y > canvas.height) s.dy *= -1;
+      });
+      requestAnimationFrame(animate);
+    }
+    animate();
+  </script>
+</body>
+</html>

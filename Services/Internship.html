@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>EduVibe Internship Portal</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: #0e0e1b;
+      color: #fff;
+      overflow-x: hidden;
+    }
+
+    header {
+      text-align: center;
+      padding: 50px 20px 20px;
+      background: linear-gradient(145deg, #0fffc1, #4f00bc);
+      color: #0e0e1b;
+      font-size: 2rem;
+      font-weight: bold;
+      text-shadow: 0 0 10px #00f0ff;
+    }
+
+    .countdown {
+      text-align: center;
+      font-size: 1.5rem;
+      margin: 20px 0;
+      padding: 10px;
+      border: 2px solid #0fffc1;
+      width: max-content;
+      margin-inline: auto;
+      border-radius: 10px;
+      box-shadow: 0 0 15px #0fffc1;
+    }
+
+    .btn-glow {
+      display: inline-block;
+      background: #0fffc1;
+      color: #000;
+      padding: 12px 25px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+      box-shadow: 0 0 15px #0fffc1;
+      transition: 0.3s ease;
+      margin: 10px;
+    }
+
+    .btn-glow:hover {
+      background: #00c2a8;
+      transform: scale(1.05);
+    }
+
+    .mentor-section {
+      padding: 40px 20px;
+      text-align: center;
+    }
+
+    .mentor-cards {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 25px;
+    }
+
+    .mentor-card {
+      background: #1a1a2e;
+      border-radius: 12px;
+      padding: 20px;
+      width: 250px;
+      /* box-shadow: 0 0 15px #0fffc1; */
+      transition: 0.4s ease;
+      position: relative;
+    }
+
+    .mentor-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 0 25px #00f0ff;
+    }
+
+    .mentor-card h3 {
+      margin-top: 10px;
+      font-size: 1.3rem;
+      color: #0fffc1;
+    }
+
+    .mentor-card p {
+      font-size: 0.95rem;
+      margin: 8px 0;
+    }
+
+    .linkedin-icon {
+      text-decoration: none;
+      color: #0fffc1;
+      font-size: 1.2rem;
+      position: absolute;
+      top: 10px;
+      right: 10px;
+    }
+
+    .popup-form {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.8);
+      z-index: 999;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .form-box {
+      background: #1a1a2e;
+      padding: 30px;
+      border-radius: 12px;
+      /* box-shadow: 0 0 25px #0fffc1; */
+      width: 90%;
+      max-width: 500px;
+    }
+
+    .form-box h2 {
+      margin-bottom: 20px;
+      color: #0fffc1;
+    }
+
+    .form-box input, .form-box textarea {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border: none;
+      border-radius: 8px;
+      outline: none;
+      font-size: 1rem;
+    }
+
+    .close-btn {
+      background: red;
+      position: absolute;
+      top: 15px;
+      right: 20px;
+      border: none;
+      color: white;
+      padding: 5px 10px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 0.9rem;
+    }
+
+    .download-btn {
+      display: inline-block;
+      text-align: center;
+    }
+
+    @media screen and (max-width: 768px) {
+      .mentor-cards {
+        flex-direction: column;
+        align-items: center;
+      }
+    }
+
+/* Internship Card Styling */
+
+  .internship-cards {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 30px;
+    margin-top: 30px;
+  }
+
+  .internship-card {
+    background: #1b1b2e;
+    padding: 25px;
+    width: 300px;
+    border-radius: 15px;
+    /* box-shadow: 0 0 20px #0fffc1; */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .internship-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 0 25px #00f0ff;
+  }
+
+  .internship-card h3 {
+    color: #0fffc1;
+    margin-bottom: 10px;
+  }
+
+  .internship-card p {
+    margin: 5px 0;
+    font-size: 0.95rem;
+  }
+
+
+  </style>
+</head>
+<body>
+
+  <header>🚀 EduVibe Internship Portal</header>
+
+  <div class="countdown">
+    Internship Starts In: <span id="timer">Loading...</span>
+  </div>
+
+  <div style="text-align:center;">
+    <button class="btn-glow" onclick="showForm()">Apply for Internship</button>
+    <a href="internship_brochure.pdf" download class="btn-glow download-btn">📄 Download Brochure</a>
+  </div>
+
+  <section class="mentor-section">
+    <h2 style="color:#0fffc1;">Meet Our Mentors & Judges</h2>
+    <div class="mentor-cards">
+      <div class="mentor-card">
+        <a href="https://linkedin.com/in/mentor1" target="_blank" class="linkedin-icon">🔗</a>
+        <h3>Dr. Aryan Mehta</h3>
+        <p>AI Researcher, Google</p>
+        <p>10+ Years Experience</p>
+      </div>
+      <div class="mentor-card">
+        <a href="https://linkedin.com/in/mentor2" target="_blank" class="linkedin-icon">🔗</a>
+        <h3>Sneha Kapoor</h3>
+        <p>Product Designer, Microsoft</p>
+        <p>UI/UX Specialist</p>
+      </div>
+      <div class="mentor-card">
+        <a href="https://linkedin.com/in/mentor3" target="_blank" class="linkedin-icon">🔗</a>
+        <h3>Rahul Verma</h3>
+        <p>DevOps Engineer, AWS</p>
+        <p>Cloud Architect</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Internship Application Form Popup -->
+  <div class="popup-form" id="popupForm">
+    <div class="form-box">
+      <button class="close-btn" onclick="hideForm()">X</button>
+      <h2>Internship Application</h2>
+      <form id="internshipForm" onsubmit="submitForm(event)">
+        <input type="text" placeholder="Full Name" required>
+        <input type="email" placeholder="Email Address" required>
+        <input type="text" placeholder="Phone Number" required>
+        <textarea placeholder="Tell us about your goals..." rows="4" required></textarea>
+        <button type="submit" class="btn-glow">Submit Application</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Available Internship Domains Section -->
+<section style="padding: 40px 20px; text-align:center;">
+    <h2 style="color:#0fffc1; font-size:2rem; text-shadow: 0 0 10px #0fffc1;">💼 Available Internship Domains</h2>
+    <div class="internship-cards">
+      <div class="internship-card">
+        <h3>🌐 Web Development</h3>
+        <p>Duration: 8 Weeks</p>
+        <p>Master HTML, CSS, JS & build responsive websites.</p>
+        <button class="btn-glow" onclick="showForm()">Apply Now</button>
+      </div>
+      <div class="internship-card">
+        <h3>🤖 AI & Machine Learning</h3>
+        <p>Duration: 10 Weeks</p>
+        <p>Work on real ML models, datasets & AI projects.</p>
+        <button class="btn-glow" onclick="showForm()">Apply Now</button>
+      </div>
+      <div class="internship-card">
+        <h3>☁️ Cloud Computing</h3>
+        <p>Duration: 6 Weeks</p>
+        <p>Explore AWS, Azure & deploy scalable apps.</p>
+        <button class="btn-glow" onclick="showForm()">Apply Now</button>
+      </div>
+      <div class="internship-card">
+        <h3>🔐 Cybersecurity</h3>
+        <p>Duration: 8 Weeks</p>
+        <p>Learn ethical hacking & network security basics.</p>
+        <button class="btn-glow" onclick="showForm()">Apply Now</button>
+      </div>
+      <div class="internship-card">
+        <h3>📊 Data Analytics</h3>
+        <p>Duration: 6 Weeks</p>
+        <p>Data visualization, Excel, Power BI & insights.</p>
+        <button class="btn-glow" onclick="showForm()">Apply Now</button>
+      </div>
+      <div class="internship-card">
+        <h3>📱 App Development</h3>
+        <p>Duration: 8 Weeks</p>
+        <p>Build Android/iOS apps using Flutter & Kotlin.</p>
+        <button class="btn-glow" onclick="showForm()">Apply Now</button>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    // Show/Hide Popup
+    function showForm() {
+      document.getElementById('popupForm').style.display = 'flex';
+    }
+
+    function hideForm() {
+      document.getElementById('popupForm').style.display = 'none';
+    }
+
+    // Countdown Timer
+    const countDownDate = new Date("April 10, 2025 10:00:00").getTime();
+    const timerElement = document.getElementById("timer");
+
+    const interval = setInterval(() => {
+      const now = new Date().getTime();
+      const distance = countDownDate - now;
+      if (distance < 0) {
+        clearInterval(interval);
+        timerElement.innerHTML = "Internship Started!";
+        return;
+      }
+      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+      timerElement.innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+    }, 1000);
+
+    // Auto Email Response Simulation
+    function submitForm(e) {
+      e.preventDefault();
+      alert("✅ Application submitted successfully!\n📩 A confirmation email has been sent to your inbox. (Simulated)");
+      document.getElementById("internshipForm").reset();
+      hideForm();
+    }
+  </script>
+
+</body>
+</html>

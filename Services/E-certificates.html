@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>EduVibe Advanced MCQ Test</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(to right, #0f0c29, #302b63, #24243e);
+      color: #fff;
+      margin: 0;
+      padding: 0;
+    }
+    .login-container, .quiz-container {
+      max-width: 800px;
+      margin: auto;
+      padding: 20px;
+    }
+    .login-box, .question, .result-box {
+      background: #1e1e1e;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 0 15px rgba(255,255,255,0.1);
+      margin-bottom: 20px;
+    }
+    h1, h2 {
+      text-align: center;
+      color: #ffcc00;
+    }
+    input[type="text"] {
+      width: 100%;
+      padding: 12px;
+      margin-top: 10px;
+      border-radius: 6px;
+      border: none;
+      font-size: 16px;
+    }
+    .btn {
+      background-color: #ffcc00;
+      border: none;
+      color: #000;
+      padding: 12px 24px;
+      margin-top: 20px;
+      font-size: 16px;
+      border-radius: 30px;
+      cursor: pointer;
+      width: 100%;
+    }
+    .btn:hover {
+      background-color: #ffb300;
+    }
+    .question h3 {
+      margin-bottom: 5px;
+    }
+    .tag {
+      display: inline-block;
+      padding: 4px 10px;
+      font-size: 12px;
+      border-radius: 5px;
+      background: #ff8800;
+      color: #fff;
+      margin-bottom: 10px;
+    }
+    .options li {
+      background: #2c2c2c;
+      padding: 10px;
+      margin: 8px 0;
+      border-radius: 6px;
+      list-style: none;
+      cursor: pointer;
+    }
+    .options li:hover { background: #3d3d3d; }
+    .highlight-correct { background: #388e3c !important; }
+    .highlight-wrong { background: #c62828 !important; }
+    .explanation { display: none; color: #ccc; font-size: 15px; margin-top: 8px; }
+    .progress-bar-container { background: #444; border-radius: 10px; overflow: hidden; }
+    .progress-bar { height: 18px; background: linear-gradient(90deg, #ffcc00, #ff8800); width: 0%; transition: 0.3s; }
+    .timer { text-align: right; font-size: 16px; margin: 10px 0; color: #ffcc00; }
+    canvas { max-width: 100%; margin-top: 20px; }
+  </style>
+</head>
+<body>
+
+<div class="login-container" id="loginPage">
+  <div class="login-box">
+    <h1>EduVibe Quiz Login</h1>
+    <input type="text" id="username" placeholder="Enter Your Name">
+    <button class="btn" onclick="startQuiz()">Start Test</button>
+  </div>
+</div>
+
+<div class="quiz-container" id="quizPage" style="display:none;">
+  <h2>EduVibe Advanced MCQ Test</h2>
+  <div class="progress-bar-container"><div class="progress-bar" id="progressBar"></div></div>
+  <div class="timer">Time Left: <span id="timer">10:00</span></div>
+  <form id="quizForm"></form>
+  <button class="btn" id="submitBtn" type="submit">Submit Test</button>
+  <div class="result-box" id="resultBox" style="display:none;">
+    <h2>Test Result</h2>
+    <p id="scoreResult"></p>
+    <div>
+      <canvas id="topicChart"></canvas>
+    </div>
+    <button class="btn" onclick="exportPDF()">Download Scorecard PDF</button>
+    <button class="btn" onclick="location.reload()">Retake Test</button>
+  </div>
+</div>
+
+<script>
+  const questions = [
+    { topic: "HTML", level: "Easy", question: "What does HTML stand for?", options: { a: "HyperText Markup Language", b: "Home Tool Markup Language", c: "Hyperlinks and Text Markup Language" }, correct: "a", explanation: "HTML stands for HyperText Markup Language." },
+    { topic: "JavaScript", level: "Medium", question: "Who created JavaScript?", options: { a: "Brendan Eich", b: "Tim Berners-Lee", c: "James Gosling" }, correct: "a", explanation: "JavaScript was created by Brendan Eich." },
+    { topic: "CSS", level: "Easy", question: "Which language is used for styling web pages?", options: { a: "HTML", b: "CSS", c: "Python" }, correct: "b", explanation: "CSS is used for styling web pages." },
+    { topic: "DBMS", level: "Medium", question: "Which of these is a relational database?", options: { a: "MySQL", b: "MongoDB", c: "Redis" }, correct: "a", explanation: "MySQL is a relational database." },
+    { topic: "HTML", level: "Hard", question: "Which tag is used to create a table in HTML?", options: { a: "<table>", b: "<tab>", c: "<div>" }, correct: "a", explanation: "Use <table> to create tables." },
+    { topic: "JavaScript", level: "Hard", question: "What does '===' mean in JavaScript?", options: { a: "Assignment", b: "Equal value and type", c: "Comparison only by value" }, correct: "b", explanation: "'===' checks value and type." }
+  ];
+
+  let currentUser = '';
+  let timeLeft = 600; // 10 mins
+  const progressBar = document.getElementById('progressBar');
+
+  function startQuiz() {
+    const username = document.getElementById("username").value.trim();
+    if (!username) return alert("Enter your name to start.");
+    currentUser = username;
+    document.getElementById("loginPage").style.display = "none";
+    document.getElementById("quizPage").style.display = "block";
+    loadQuestions();
+    startTimer();
+  }
+
+  function shuffle(arr) { return arr.sort(() => Math.random() - 0.5); }
+
+  function loadQuestions() {
+    const form = document.getElementById("quizForm");
+    const shuffledQuestions = shuffle(questions);
+    shuffledQuestions.forEach((q, i) => {
+      const options = shuffle(Object.keys(q.options));
+      const htmlOptions = options.map(k => `
+        <li>
+          <label><input type="radio" name="q${i}" value="${k}"> ${q.options[k]}</label>
+        </li>`).join('');
+      form.innerHTML += `
+        <div class="question" data-topic="${q.topic}" data-level="${q.level}">
+          <span class="tag">${q.topic} | ${q.level}</span>
+          <h3>Q${i + 1}. ${q.question}</h3>
+          <ul class="options">${htmlOptions}</ul>
+          <div class="explanation">${q.explanation}</div>
+          <button type="button" class="btn check-btn" onclick="checkAnswer(${i}, '${q.correct}')">Check Answer</button>
+        </div>`;
+    });
+  }
+
+  function startTimer() {
+    const timer = document.getElementById("timer");
+    const interval = setInterval(() => {
+      const min = Math.floor(timeLeft / 60);
+      const sec = timeLeft % 60;
+      timer.textContent = `${String(min).padStart(2,'0')}:${String(sec).padStart(2,'0')}`;
+      timeLeft--;
+      const progress = ((600 - timeLeft) / 600) * 100;
+      progressBar.style.width = `${progress}%`;
+      if (timeLeft < 0) {
+        clearInterval(interval);
+        document.getElementById("quizForm").dispatchEvent(new Event("submit"));
+      }
+    }, 1000);
+  }
+
+  function checkAnswer(i, correct) {
+    const selected = document.querySelector(`input[name="q${i}"]:checked`);
+    const allOptions = document.querySelectorAll(`input[name="q${i}"]`);
+    allOptions.forEach(opt => {
+      const li = opt.closest("li");
+      if (opt.value === correct) li.classList.add("highlight-correct");
+      if (opt.checked && opt.value !== correct) li.classList.add("highlight-wrong");
+    });
+    const explanation = document.querySelectorAll('.explanation')[i];
+    explanation.style.display = "block";
+  }
+
+  document.getElementById("quizForm").addEventListener("submit", function (e) {
+    e.preventDefault();
+    const topicScores = {};
+    let score = 0;
+    questions.forEach((q, i) => {
+      const selected = document.querySelector(`input[name="q${i}"]:checked`);
+      if (!topicScores[q.topic]) topicScores[q.topic] = { total: 0, correct: 0 };
+      topicScores[q.topic].total += 1;
+      if (selected && selected.value === q.correct) {
+        score++;
+        topicScores[q.topic].correct += 1;
+      }
+    });
+
+    const percent = (score / questions.length) * 100;
+    let text = `${currentUser}, your score is ${score}/${questions.length} (${percent.toFixed(2)}%)`;
+    document.getElementById("scoreResult").innerText = text;
+    document.getElementById("resultBox").style.display = "block";
+    createChart(topicScores);
+  });
+
+  function createChart(scores) {
+    const ctx = document.getElementById('topicChart').getContext('2d');
+    const labels = Object.keys(scores);
+    const data = labels.map(k => scores[k].correct);
+    const bg = ['#ffcc00', '#ff5733', '#33c1ff', '#8e44ad', '#2ecc71'];
+    new Chart(ctx, {
+      type: 'pie',
+      data: { labels, datasets: [{ label: 'Topic Performance', data, backgroundColor: bg }] },
+      options: { responsive: true }
+    });
+  }
+
+  function exportPDF() {
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
+    doc.setFontSize(18);
+    doc.text("EduVibe Quiz Scorecard", 20, 20);
+    doc.setFontSize(14);
+    doc.text(`Name: ${currentUser}`, 20, 40);
+    doc.text(document.getElementById("scoreResult").innerText, 20, 55);
+    doc.save("EduVibe_Scorecard.pdf");
+  }
+</script>
+</body>
+</html>

@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Graphic Design & UI/UX | EduVibe</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #1A1A2E, #0F3460);
+      color: white;
+    }
+    header {
+      background: linear-gradient(90deg, #ff0080, #ff8c00);
+      padding: 20px 40px;
+      text-align: center;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    }
+    header h1 {
+      margin: 0;
+      font-size: 36px;
+    }
+    .container {
+      max-width: 1000px;
+      margin: 30px auto;
+      background: rgba(255, 255, 255, 0.05);
+      padding: 30px;
+      border-radius: 15px;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 0 20px rgba(255, 0, 150, 0.2);
+    }
+    h2 {
+      color: #ffde03;
+      margin-top: 30px;
+    }
+    p, li {
+      font-size: 16px;
+      line-height: 1.7;
+    }
+    ul {
+      padding-left: 20px;
+    }
+    .highlight {
+      color: #00f7ff;
+      font-weight: bold;
+    }
+    .note-box {
+      background: linear-gradient(135deg, #232526, #414345);
+      padding: 15px 20px;
+      border-left: 5px solid #ff0080;
+      border-radius: 10px;
+      margin-top: 15px;
+    }
+    .download-btn, .check-btn {
+      display: inline-block;
+      margin: 10px 0;
+      padding: 10px 20px;
+      background: #00f7ff;
+      color: #000;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: 0.3s ease;
+    }
+    .download-btn:hover, .check-btn:hover {
+      background: #ffde03;
+      color: black;
+    }
+    iframe {
+      width: 100%;
+      height: 400px;
+      border-radius: 12px;
+      border: none;
+      margin-top: 20px;
+      box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+    }
+    .quiz-section {
+      margin-top: 30px;
+    }
+    .quiz-box {
+      background: #2c2f4a;
+      padding: 15px 20px;
+      border-radius: 10px;
+      margin-bottom: 15px;
+    }
+    .quiz-box h4 {
+      margin-bottom: 10px;
+    }
+    .quiz-box label {
+      display: block;
+      margin: 5px 0;
+    }
+    .submit-btn {
+      padding: 10px 20px;
+      background: #00c6ff;
+      color: black;
+      border: none;
+      border-radius: 8px;
+      font-weight: bold;
+      margin-top: 10px;
+      cursor: pointer;
+    }
+    .submit-btn:hover {
+      background: #ffde03;
+    }
+    .back-btn {
+      display: inline-block;
+      margin-top: 30px;
+      padding: 10px 20px;
+      background: #00c6ff;
+      color: #000;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    .back-btn:hover {
+      background: #ffde03;
+    }
+    footer {
+      text-align: center;
+      padding: 20px;
+      font-size: 14px;
+      background: #0f0f1a;
+      margin-top: 40px;
+    }
+    .result {
+      margin-top: 10px;
+      font-weight: bold;
+      color: #00f7ff;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Graphic Design & UI/UX</h1>
+    <p>Design the Future with EduVibe</p>
+  </header>
+  <div class="container">
+    <h2>Introduction to Graphic Design</h2>
+    <p>Graphic Design is the art and practice of planning and projecting ideas with visual and textual content. It communicates messages through visuals to inspire and inform users.</p>
+    <h2>Adobe Photoshop</h2>
+    <ul>
+      <li>Image editing and manipulation</li>
+      <li>Layer-based design</li>
+      <li>Photo retouching</li>
+      <li>Graphic illustrations and compositions</li>
+    </ul>
+    <h2>Figma</h2>
+    <ul>
+      <li>Collaborative interface design</li>
+      <li>Prototyping user flows</li>
+      <li>Wireframing and responsive layout creation</li>
+      <li>Component reuse and asset management</li>
+    </ul>
+    <h2>UX Design</h2>
+    <ul>
+      <li>User Research and Persona Building</li>
+      <li>Information Architecture</li>
+      <li>Wireframes and Prototypes</li>
+      <li>Usability Testing</li>
+    </ul>
+    <div class="note-box">
+      📌 <strong>Note:</strong> UI focuses on how a product looks, UX focuses on how it works.
+    </div>
+    <a href="design-notes.pdf" download class="download-btn">📄 Download PDF Notes</a>
+    <h2>📺 Video Lecture</h2>
+    <iframe src="https://www.youtube.com/embed/vCSTbIwwt9E" allowfullscreen></iframe>
+    <div class="quiz-section">
+      <h2>📝 Quick Quiz</h2>
+      <div class="quiz-box">
+        <h4>1. What does UX stand for?</h4>
+        <label><input type="radio" name="q1" value="a"> User Extension</label>
+        <label><input type="radio" name="q1" value="b"> User Experience</label>
+        <label><input type="radio" name="q1" value="c"> Universal Experience</label>
+        <label><input type="radio" name="q1" value="d"> Unique Experience</label>
+        <button class="check-btn" onclick="checkAnswer('q1','b')">Check Answer</button>
+      </div>
+      <div class="quiz-box">
+        <h4>2. Which tool is used for collaborative interface design?</h4>
+        <label><input type="radio" name="q2" value="a"> Photoshop</label>
+        <label><input type="radio" name="q2" value="b"> Illustrator</label>
+        <label><input type="radio" name="q2" value="c"> Figma</label>
+        <label><input type="radio" name="q2" value="d"> Canva</label>
+        <button class="check-btn" onclick="checkAnswer('q2','c')">Check Answer</button>
+      </div>
+      <button class="submit-btn" onclick="submitQuiz()">Submit Quiz</button>
+      <div id="result" class="result"></div>
+    </div>
+    <a href="../courses.html" class="back-btn">← Back to All Courses</a>
+  </div>
+  <footer>
+    © 2025 EduVibe. All rights reserved.
+  </footer>
+  <script>
+    function submitQuiz() {
+      const answers = { q1: 'b', q2: 'c' };
+      let score = 0;
+      for (let key in answers) {
+        const selected = document.querySelector(`input[name="${key}"]:checked`);
+        if (selected && selected.value === answers[key]) score++;
+      }
+      document.getElementById("result").innerText = `You scored ${score}/2`;
+    }
+    function checkAnswer(questionName, correctAnswer) {
+      const selected = document.querySelector(`input[name="${questionName}"]:checked`);
+      if (!selected) alert("Please select an answer.");
+      else if (selected.value === correctAnswer) alert("✅ Correct Answer!");
+      else alert("❌ Incorrect. Try again!");
+    }
+  </script>
+</body>
+</html>

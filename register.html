@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>EduVibe - Student Registration</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Poppins', sans-serif;
+      background: black;
+      color: white;
+      height: 100%;
+      overflow-y: auto;
+    }
+
+    canvas#starfield {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: -1;
+    }
+
+    .registration-wrapper {
+      display: flex;
+      justify-content: center;
+      padding: 60px 20px;
+      min-height: 100vh;
+      box-sizing: border-box;
+    }
+
+    .registration-container {
+      background: rgba(255, 255, 255, 0.06);
+      backdrop-filter: blur(20px);
+      padding: 35px 30px;
+      border-radius: 20px;
+      box-shadow: 0 0 30px rgba(0, 255, 255, 0.2);
+      max-width: 600px;
+      width: 100%;
+    }
+
+    .registration-container h2 {
+      color: #0ff;
+      text-align: center;
+      margin-bottom: 25px;
+    }
+
+    .form-group {
+      position: relative;
+      margin-bottom: 25px;
+    }
+
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+      width: 100%;
+      padding: 12px;
+      background: rgba(255, 255, 255, 0.1);
+      border: none;
+      border-radius: 10px;
+      color: white;
+      font-size: 16px;
+      outline: none;
+      box-shadow: 0 0 10px rgba(0, 255, 255, 0.2);
+      appearance: none;
+    }
+
+    .form-group select {
+      background-color: rgba(255, 255, 255, 0.1);
+      color: white;
+    }
+
+    .form-group label {
+      position: absolute;
+      top: 12px;
+      left: 14px;
+      font-size: 14px;
+      color: #ccc;
+      pointer-events: none;
+      transition: 0.3s ease;
+      background: rgba(0, 0, 0, 0.6);
+      padding: 0 5px;
+      border-radius: 5px;
+    }
+
+    .form-group input:focus + label,
+    .form-group input:not(:placeholder-shown) + label,
+    .form-group textarea:focus + label,
+    .form-group textarea:not(:placeholder-shown) + label,
+    .form-group select:focus + label,
+    .form-group select:not([value=""]) + label {
+      top: -10px;
+      left: 10px;
+      font-size: 12px;
+      color: #0ff;
+    }
+
+    .form-group textarea {
+      resize: vertical;
+      min-height: 80px;
+    }
+
+    button {
+      width: 100%;
+      background: linear-gradient(45deg, #00ffff, #ff00ff);
+      color: black;
+      font-weight: bold;
+      font-size: 18px;
+      border: none;
+      border-radius: 30px;
+      padding: 12px;
+      cursor: pointer;
+      box-shadow: 0 0 20px rgba(0, 255, 255, 0.6);
+      transition: 0.3s ease;
+    }
+
+    button:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 30px rgba(0, 255, 255, 0.9);
+    }
+
+    .social-login {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 20px;
+      gap: 15px;
+      flex-wrap: wrap;
+    }
+
+    .social-login button {
+      flex: 1;
+      background: rgba(255, 255, 255, 0.15);
+      color: white;
+      border: 1px solid #0ff;
+      font-size: 14px;
+      padding: 10px;
+      border-radius: 8px;
+      transition: 0.3s ease;
+    }
+
+    .social-login button:hover {
+      background-color: #0ff;
+      color: black;
+    }
+
+    @media screen and (max-width: 600px) {
+      .registration-container {
+        padding: 25px 20px;
+      }
+
+      .social-login {
+        flex-direction: column;
+      }
+
+      .social-login button {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<canvas id="starfield"></canvas>
+
+<div class="registration-wrapper">
+  <div class="registration-container">
+    <h2>Student Registration</h2>
+
+    <div class="social-login">
+      <button>Sign in with Google</button>
+      <button>Sign in with Facebook</button>
+    </div>
+
+    <form>
+      <div class="form-group">
+        <input type="text" id="fullname" placeholder=" " required />
+        <label for="fullname">Full Name</label>
+      </div>
+      <div class="form-group">
+        <input type="email" id="email" placeholder=" " required />
+        <label for="email">Email</label>
+      </div>
+      <div class="form-group">
+        <input type="password" id="password" placeholder=" " required />
+        <label for="password">Password</label>
+      </div>
+      <div class="form-group">
+        <input type="text" id="mobile" placeholder=" " required />
+        <label for="mobile">Mobile Number</label>
+      </div>
+      <div class="form-group">
+        <select id="gender" required>
+          <option value="" disabled selected></option>
+          <option value="Male" style="color: black;">Male</option>
+          <option value="Female" style="color: black;">Female</option>
+          <option value="Other" style="color: black;">Other</option>
+        </select>
+        <label for="gender">Gender</label>
+      </div>
+      <div class="form-group">
+        <input type="date" id="dob" required />
+        <label for="dob">Date of Birth</label>
+      </div>
+      <div class="form-group">
+        <input type="text" id="course" placeholder=" " required />
+        <label for="course">Course Interested</label>
+      </div>
+      <div class="form-group">
+        <input type="text" id="address" placeholder=" " required />
+        <label for="address">Address</label>
+      </div>
+      <div class="form-group">
+        <textarea id="additional" placeholder=" "></textarea>
+        <label for="additional">Additional Information (Optional)</label>
+      </div>
+
+      <button type="submit">Register</button>
+    </form>
+  </div>
+</div>
+
+<!-- Moving Stars Animation Script -->
+<script>
+  const canvas = document.getElementById("starfield");
+  const ctx = canvas.getContext("2d");
+
+  function resizeCanvas() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  }
+  window.addEventListener("resize", resizeCanvas);
+  resizeCanvas();
+
+  const stars = [];
+  for (let i = 0; i < 150; i++) {
+    stars.push({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height,
+      r: Math.random() * 1.5,
+      speed: Math.random() * 0.5 + 0.2
+    });
+  }
+
+  function animateStars() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.fillStyle = "white";
+    stars.forEach((s) => {
+      ctx.beginPath();
+      ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+      ctx.fill();
+      s.y += s.speed;
+      if (s.y > canvas.height) {
+        s.y = 0;
+        s.x = Math.random() * canvas.width;
+      }
+    });
+    requestAnimationFrame(animateStars);
+  }
+
+  animateStars();
+</script>
+
+</body>
+</html>

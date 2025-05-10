@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>EduVibe | Study Room</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: #0d0d0d;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+    .header {
+      text-align: center;
+      padding: 1rem;
+      font-size: 1.8rem;
+      color: #00ffe1;
+    }
+    .controls, .pomodoro-controls {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin: 1rem;
+    }
+    .controls input, .controls button, .pomodoro-controls button {
+      padding: 0.6rem 1rem;
+      border: none;
+      border-radius: 8px;
+      background: #1a1a1a;
+      color: #00ffe1;
+      font-size: 1rem;
+    }
+    .controls input::placeholder { color: #888; }
+    .controls button:hover, .pomodoro-controls button:hover {
+      background: #00ffe1;
+      color: #0d0d0d;
+      cursor: pointer;
+    }
+    .timer, .link-output, .pomodoro-timer {
+      text-align: center;
+      margin-top: 0.5rem;
+      font-size: 1rem;
+      color: #ccc;
+    }
+    #jitsi-container, #whiteboard {
+      /* flex: 1; */
+      height: 600px;
+      width: 90%;
+      margin: 1rem auto;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 0 12px #00ffe1;
+      background: #000;
+    }
+    #whiteboard iframe {
+      width: 100%;
+      height: 400px;
+      border: none;
+    }
+    .link-actions {
+      display: flex;
+      justify-content: center;
+      gap: 0.5rem;
+      margin-top: 0.5rem;
+    }
+    #qrcode {
+      display: flex;
+      justify-content: center;
+      margin-top: 0.5rem;
+    }
+    @media screen and (max-width: 768px) {
+      #jitsi-container, #whiteboard {
+        height: 60vh;
+        width: 95%;
+      }
+      .controls, .pomodoro-controls {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header">🚀 EduVibe Virtual Study Room</div>
+
+  <div class="controls">
+    <input type="text" id="displayName" placeholder="Your Name (required)" />
+    <input type="text" id="roomName" placeholder="Room Name (opt. for join)" />
+    <button onclick="createRoom()">Create Room</button>
+    <button onclick="joinRoom()">Join Room</button>
+    <button onclick="leaveMeeting()">Leave Room</button>
+  </div>
+
+  <div class="timer" id="sessionTimer">Session Time: 00:00</div>
+
+  <div class="link-output" id="roomLink" style="display:none;">
+    Room Link: <span id="linkText" style="color:#00ffe1;"></span>
+  </div>
+  <div class="link-actions" id="linkActions" style="display:none;">
+    <button onclick="copyRoomLink()">Copy Link</button>
+    <button onclick="generateQRCode()">Show QR</button>
+  </div>
+  <div id="qrcode"></div>
+
+  <div id="jitsi-container">
+    <div class="controls">
+  <input type="text" id="sentimentInput" placeholder="Type your message..." />
+  <button onclick="analyzeSentiment()">Analyze Sentiment</button>
+</div>
+<div class="timer" id="sentimentResult"></div>
+  </div>
+
+  <div class="header">📝 Shared Whiteboard</div>
+  <div id="whiteboard">
+    <iframe src="https://excalidraw.com/" allow="clipboard-write"></iframe>
+  </div>
+
+  <div class="header">⏱ Pomodoro Timer</div>
+  <div class="pomodoro-timer" id="pomodoroTimer">25:00</div>
+  <div class="pomodoro-controls">
+    <button onclick="startPomodoro()">▶ Start</button>
+    <button onclick="pausePomodoro()">⏸ Pause</button>
+    <button onclick="resetPomodoro()">🔄 Reset</button>
+  </div>
+
+  
+
+
+
+  <script src="https://8x8.vc/external_api.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
+  <script>
+    let api = null, timer = null, seconds = 0;
+
+    function formatTime(sec) {
+      const m = String(Math.floor(sec / 60)).padStart(2, '0');
+      const s = String(sec % 60).padStart(2, '0');
+      return `${m}:${s}`;
+    }
+
+    function startTimer() {
+      timer = setInterval(() => {
+        seconds++;
+        document.getElementById('sessionTimer').innerText =
+          "Session Time: " + formatTime(seconds);
+      }, 1000);
+    }
+
+    function stopTimer() {
+      clearInterval(timer);
+      seconds = 0;
+      document.getElementById('sessionTimer').innerText =
+        "Session Time: 00:00";
+    }
+
+    function createRoom() {
+      const name = document.getElementById("displayName").value.trim();
+      if (!name) return alert("Enter your name.");
+      const rnd = "EduVibe_" + Math.random().toString(36).substr(2, 8);
+      document.getElementById("roomName").value = rnd;
+      startMeeting(name, rnd);
+      showRoomLink(rnd);
+    }
+
+    function joinRoom() {
+      const name = document.getElementById("displayName").value.trim();
+      const room = document.getElementById("roomName").value.trim();
+      if (!name || !room) return alert("Name & room required.");
+      startMeeting(name, room);
+      showRoomLink(room);
+    }
+
+    function startMeeting(name, room) {
+      if (api) { api.dispose(); stopTimer(); }
+
+      document.getElementById("qrcode").innerHTML = "";
+      document.getElementById("linkText").textContent = "";
+      document.getElementById("roomLink").style.display = "none";
+      document.getElementById("linkActions").style.display = "none";
+
+      api = new JitsiMeetExternalAPI("8x8.vc", {
+        roomName: room,
+        width: "100%", height: "100%",
+        parentNode: document.querySelector('#jitsi-container'),
+        interfaceConfigOverwrite: {
+          SHOW_JITSI_WATERMARK: false,
+          DISABLE_JOIN_LEAVE_NOTIFICATIONS: true,
+          TOOLBAR_BUTTONS: [
+            'microphone', 'camera', 'desktop', 'fullscreen',
+            'hangup', 'chat', 'raisehand', 'tileview', 'settings'
+          ]
+        },
+        configOverwrite: {
+          prejoinPageEnabled: false,
+          disableCalendarIntegration: true
+        },
+        userInfo: { displayName: name }
+      });
+
+      startTimer();
+      api.addEventListener('videoConferenceLeft', () => {
+        stopTimer(); api.dispose(); api = null;
+      });
+    }
+
+    function leaveMeeting() {
+      if (api) api.executeCommand('hangup');
+    }
+
+    function showRoomLink(room) {
+      const url = `https://8x8.vc/${room}`;
+      document.getElementById("linkText").textContent = url;
+      document.getElementById("roomLink").style.display = "block";
+      document.getElementById("linkActions").style.display = "flex";
+    }
+
+    function copyRoomLink() {
+      navigator.clipboard.writeText(
+        document.getElementById("linkText").textContent
+      ).then(() => alert("Link copied!"));
+    }
+
+    function generateQRCode() {
+      const txt = document.getElementById("linkText").textContent;
+      const qr = document.getElementById("qrcode");
+      qr.innerHTML = "";
+      QRCode.toCanvas(txt, {
+        width: 200,
+        color: { dark: "#00ffe1", light: "#0d0d0d" }
+      }, (err, canvas) => err ? console.error(err) : qr.appendChild(canvas));
+    }
+
+    // Pomodoro Timer Logic
+    let pomoTime = 1500, pomoTimer = null;
+
+    function updatePomodoro() {
+      document.getElementById("pomodoroTimer").innerText = formatTime(pomoTime);
+    }
+
+    function startPomodoro() {
+      if (pomoTimer) return;
+      pomoTimer = setInterval(() => {
+        if (pomoTime > 0) {
+          pomoTime--;
+          updatePomodoro();
+        } else {
+          clearInterval(pomoTimer);
+          pomoTimer = null;
+          alert("⏰ Pomodoro done! Take a break.");
+          pomoTime = 300; // 5 minute break
+          updatePomodoro();
+        }
+      }, 1000);
+    }
+
+    function pausePomodoro() {
+      clearInterval(pomoTimer);
+      pomoTimer = null;
+    }
+
+    function resetPomodoro() {
+      pausePomodoro();
+      pomoTime = 1500; // Reset to 25 min
+      updatePomodoro();
+    }
+
+    updatePomodoro(); // Initial load
+
+  async function analyzeSentiment() {
+  const text = document.getElementById("sentimentInput").value;
+
+  const res = await fetch("http://localhost:5000/analyze", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ text })
+  });
+
+  const data = await res.json();
+  const compound = data.compound;
+
+  let sentiment = "😐 Neutral";
+  if (compound > 0.2) sentiment = "🙂 Positive";
+  else if (compound < -0.2) sentiment = "😟 Negative";
+
+  document.getElementById("sentimentResult").innerText = `Sentiment: ${sentiment}`;
+}
+
+  </script>
+</body>
+</html>

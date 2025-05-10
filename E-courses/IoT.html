@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Internet of Things (IoT) | EduVibe</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #1A1A2E, #0F3460);
+      color: white;
+    }
+
+    header {
+      background: linear-gradient(90deg, #00c9ff, #92fe9d);
+      padding: 20px 40px;
+      text-align: center;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 36px;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: 30px auto;
+      background: rgba(255, 255, 255, 0.05);
+      padding: 30px;
+      border-radius: 15px;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 0 20px rgba(0, 255, 255, 0.2);
+    }
+
+    h2 {
+      color: #ffde03;
+      margin-top: 30px;
+    }
+
+    p, li {
+      font-size: 16px;
+      line-height: 1.7;
+    }
+
+    ul {
+      padding-left: 20px;
+    }
+
+    .highlight {
+      color: #00f7ff;
+      font-weight: bold;
+    }
+
+    .note-box {
+      background: linear-gradient(135deg, #232526, #414345);
+      padding: 15px 20px;
+      border-left: 5px solid #00c9ff;
+      border-radius: 10px;
+      margin-top: 15px;
+    }
+
+    .download-btn, .check-btn {
+      display: inline-block;
+      margin: 10px 0;
+      padding: 10px 20px;
+      background: #00f7ff;
+      color: #000;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: 0.3s ease;
+    }
+
+    .download-btn:hover, .check-btn:hover {
+      background: #ffde03;
+      color: black;
+    }
+
+    iframe {
+      width: 100%;
+      height: 400px;
+      border-radius: 12px;
+      border: none;
+      margin-top: 20px;
+      box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+    }
+
+    .quiz-section {
+      margin-top: 30px;
+    }
+
+    .quiz-box {
+      background: #2c2f4a;
+      padding: 15px 20px;
+      border-radius: 10px;
+      margin-bottom: 15px;
+    }
+
+    .quiz-box h4 {
+      margin-bottom: 10px;
+    }
+
+    .quiz-box label {
+      display: block;
+      margin: 5px 0;
+    }
+
+    .submit-btn {
+      padding: 10px 20px;
+      background: #00c6ff;
+      color: black;
+      border: none;
+      border-radius: 8px;
+      font-weight: bold;
+      margin-top: 10px;
+      cursor: pointer;
+    }
+
+    .submit-btn:hover {
+      background: #ffde03;
+    }
+
+    .back-btn {
+      display: inline-block;
+      margin-top: 30px;
+      padding: 10px 20px;
+      background: #00c6ff;
+      color: #000;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .back-btn:hover {
+      background: #ffde03;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      font-size: 14px;
+      background: #0f0f1a;
+      margin-top: 40px;
+    }
+
+    .result {
+      margin-top: 10px;
+      font-weight: bold;
+      color: #00f7ff;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Internet of Things (IoT)</h1>
+    <p>Connecting the digital world with the physical</p>
+  </header>
+
+  <div class="container">
+    <h2>What is IoT?</h2>
+    <p><span class="highlight">Internet of Things (IoT)</span> refers to a network of interconnected physical devices that communicate and exchange data using the internet.</p>
+
+    <h2>Key Concepts</h2>
+    <ul>
+      <li><strong>Embedded Systems:</strong> Dedicated computer systems built into devices to control functions.</li>
+      <li><strong>IoT Security:</strong> Protecting IoT devices and networks from cyber threats and data breaches.</li>
+      <li><strong>Arduino & Raspberry Pi:</strong> Popular development platforms for building IoT applications and prototypes.</li>
+    </ul>
+
+    <div class="note-box">
+      📌 <strong>Note:</strong> IoT enhances automation and real-time decision-making across industries like healthcare, agriculture, smart homes, and manufacturing.
+    </div>
+
+    <a href="iot-notes.pdf" download class="download-btn">📄 Download PDF Notes</a>
+
+    <h2>📺 Video Lecture</h2>
+    <iframe src="https://www.youtube.com/embed/LlhmzVL5bm8" allowfullscreen></iframe>
+
+    <div class="quiz-section">
+      <h2>📝 Quick Quiz</h2>
+
+      <div class="quiz-box">
+        <h4>1. What is the full form of IoT?</h4>
+        <label><input type="radio" name="q1" value="a"> Internet of Technology</label>
+        <label><input type="radio" name="q1" value="b"> Internet of Tools</label>
+        <label><input type="radio" name="q1" value="c"> Internet of Things</label>
+        <label><input type="radio" name="q1" value="d"> Internal of Things</label>
+        <button class="check-btn" onclick="checkAnswer('q1', 'c')">Check Answer</button>
+      </div>
+
+      <div class="quiz-box">
+        <h4>2. Which board is widely used for IoT prototyping?</h4>
+        <label><input type="radio" name="q2" value="a"> Arduino</label>
+        <label><input type="radio" name="q2" value="b"> GPU</label>
+        <label><input type="radio" name="q2" value="c"> CPU</label>
+        <label><input type="radio" name="q2" value="d"> SSD</label>
+        <button class="check-btn" onclick="checkAnswer('q2', 'a')">Check Answer</button>
+      </div>
+
+      <div class="quiz-box">
+        <h4>3. Which of the following is a security concern in IoT?</h4>
+        <label><input type="radio" name="q3" value="a"> Battery Life</label>
+        <label><input type="radio" name="q3" value="b"> Device Size</label>
+        <label><input type="radio" name="q3" value="c"> Data Breach</label>
+        <label><input type="radio" name="q3" value="d"> Firmware Updates</label>
+        <button class="check-btn" onclick="checkAnswer('q3', 'c')">Check Answer</button>
+      </div>
+
+      <button class="submit-btn" onclick="submitQuiz()">Submit Quiz</button>
+      <div id="result" class="result"></div>
+    </div>
+
+    <a href="../courses.html" class="back-btn">← Back to All Courses</a>
+  </div>
+
+  <footer>
+    © 2025 EduVibe. All rights reserved.
+  </footer>
+
+  <script>
+    function submitQuiz() {
+      const answers = {
+        q1: 'c',
+        q2: 'a',
+        q3: 'c'
+      };
+      let score = 0;
+      for (let key in answers) {
+        const selected = document.querySelector(`input[name="${key}"]:checked`);
+        if (selected && selected.value === answers[key]) score++;
+      }
+      document.getElementById("result").innerText = `You scored ${score}/3`;
+    }
+
+    function checkAnswer(questionName, correctAnswer) {
+      const selected = document.querySelector(`input[name="${questionName}"]:checked`);
+      if (!selected) {
+        alert("Please select an answer.");
+      } else if (selected.value === correctAnswer) {
+        alert("✅ Correct Answer!");
+      } else {
+        alert("❌ Incorrect. Try again!");
+      }
+    }
+  </script>
+</body>
+</html>

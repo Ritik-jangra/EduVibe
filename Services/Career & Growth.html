@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Career & Growth - EduVibe</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #0f0f1a, #1a1a3c);
+            color: #f1f1f1;
+        }
+
+        header {
+            background: linear-gradient(to right, #6c63ff, #00eaff);
+            padding: 30px;
+            text-align: center;
+            color: #fff;
+            text-shadow: 0 0 10px #00eaff;
+            box-shadow: 0 0 15px #00eaff;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2.5rem;
+        }
+
+        .tabs {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            background-color: #14142b;
+            border-bottom: 2px solid #2c2c5e;
+            padding: 10px 0;
+        }
+
+        .tabs button {
+            padding: 12px 24px;
+            margin: 6px;
+            border: none;
+            background-color: #1e1e3f;
+            color: #fff;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: 0.4s ease;
+            box-shadow: 0 0 8px rgba(0, 255, 255, 0.3);
+        }
+
+        .tabs button:hover,
+        .tabs button.active {
+            background-color: #00eaff;
+            color: #14142b;
+            font-weight: bold;
+            /* box-shadow: 0 0 10px #00eaff, 0 0 20px #00eaff; */
+        }
+
+        .tab-content {
+            display: none;
+            padding: 30px;
+            background: #1a1a3c;
+            color: #ddd;
+            animation: fadeIn 0.6s ease;
+            border-top: 1px solid #444;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .section-title {
+            color: #00ffff;
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+            text-shadow: 0 0 10px #00ffff;
+        }
+
+        .highlight {
+            color: #ff00ff;
+            font-weight: bold;
+            text-shadow: 0 0 6px #ff00ff;
+        }
+
+        ul li {
+            margin-bottom: 10px;
+            line-height: 1.6;
+        }
+
+        .video-section {
+            margin: 40px auto;
+            padding: 0 20px;
+            text-align: center;
+        }
+
+        .video-section video {
+            width: 90%;
+            max-width: 800px;
+            height: auto;
+            border-radius: 12px;
+            box-shadow: 0 0 15px rgba(0, 255, 255, 0.5);
+        }
+
+        .download-section {
+            margin: 40px auto;
+            text-align: center;
+        }
+
+        .download-section a {
+            display: inline-block;
+            background: #00eaff;
+            color: #000;
+            padding: 14px 28px;
+            text-decoration: none;
+            border-radius: 10px;
+            font-weight: bold;
+            box-shadow: 0 0 10px #00eaff, 0 0 20px #00eaff;
+            transition: 0.3s ease;
+        }
+
+        .download-section a:hover {
+            background: #6c63ff;
+            color: #fff;
+            /* box-shadow: 0 0 12px #6c63ff, 0 0 25px #6c63ff; */
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .tabs {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .tabs button {
+                width: 90%;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Career & Growth @ EduVibe</h1>
+    </header>
+
+    <div class="tabs">
+        <button class="tab-btn active" onclick="openTab(event, 'career-paths')">Career Paths</button>
+        <button class="tab-btn" onclick="openTab(event, 'skill-roadmap')">Skill Roadmap</button>
+        <button class="tab-btn" onclick="openTab(event, 'resume-prep')">Resume & Interview</button>
+        <button class="tab-btn" onclick="openTab(event, 'job-trends')">Job Trends</button>
+        <button class="tab-btn" onclick="openTab(event, 'internships')">Internship Guide</button>
+        <button class="tab-btn" onclick="openTab(event, 'certifications')">Certifications</button>
+        <button class="tab-btn" onclick="openTab(event, 'success-stories')">Success Stories</button>
+        <button class="tab-btn" onclick="openTab(event, 'events')">Events & Webinars</button>
+        <button class="tab-btn" onclick="openTab(event, 'tools')">Career Tools</button>
+    </div>
+
+    <div class="tab-content active" id="career-paths">
+        <h2 class="section-title">Explore Career Paths</h2>
+        <ul>
+            <li><span class="highlight">Full Stack Developer</span>: Master frontend & backend technologies like HTML, CSS, JS, React, Node.js, MongoDB.</li>
+            <li><span class="highlight">Data Scientist</span>: Learn statistics, Python, ML, visualization tools, and storytelling with data.</li>
+            <li><span class="highlight">Cybersecurity Analyst</span>: Study ethical hacking, network security, and risk analysis.</li>
+            <li><span class="highlight">AI/ML Engineer</span>: Work with algorithms, NLP, computer vision, deep learning frameworks like TensorFlow.</li>
+            <li><span class="highlight">Cloud Engineer</span>: Gain hands-on skills in AWS, Azure, and GCP architecture and services.</li>
+        </ul>
+    </div>
+
+    <div class="tab-content" id="skill-roadmap">
+        <h2 class="section-title">Skill Development Roadmap</h2>
+        <ul>
+            <li><span class="highlight">Beginner</span>: Learn Programming (C/C++/Python), Basic HTML/CSS, Problem-solving skills.</li>
+            <li><span class="highlight">Intermediate</span>: Version Control (Git/GitHub), JavaScript, DBMS, Data Structures & Algorithms.</li>
+            <li><span class="highlight">Advanced</span>: Frameworks (React, Node.js), DevOps Tools, API Integration, Cloud & ML Tools.</li>
+            <li><span class="highlight">Expert</span>: Project Building, Hackathons, Competitive Programming, Research, Mentorship.</li>
+        </ul>
+    </div>
+
+    <div class="tab-content" id="resume-prep">
+        <h2 class="section-title">Resume & Interview Preparation</h2>
+        <ul>
+            <li>Write a crisp <span class="highlight">one-page resume</span> with strong action verbs and quantifiable impact.</li>
+            <li>Practice <span class="highlight">mock interviews</span> with peers or mentors.</li>
+            <li>Prepare <span class="highlight">HR Questions</span> like "Tell me about yourself", "Strengths & Weaknesses".</li>
+            <li>Learn <span class="highlight">STAR format</span> for answering behavioral questions.</li>
+            <li>Participate in <span class="highlight">group discussions</span> and public speaking forums to boost confidence.</li>
+        </ul>
+    </div>
+
+    <div class="tab-content" id="job-trends">
+        <h2 class="section-title">Latest Job Market Trends</h2>
+        <ul>
+            <li><span class="highlight">Remote Work</span> and Freelancing gaining popularity.</li>
+            <li>Increasing demand for <span class="highlight">AI, Data Science, Cloud, DevOps, Blockchain</span>.</li>
+            <li>Hybrid job profiles like <span class="highlight">Product Developer + Data Analyst</span>.</li>
+            <li>Value for <span class="highlight">Soft Skills</span> like communication, leadership, time management.</li>
+        </ul>
+    </div>
+
+    <div class="tab-content" id="internships">
+        <h2 class="section-title">Internship Guide</h2>
+        <ul>
+            <li>Start early with <span class="highlight">virtual internships</span> or open-source contributions.</li>
+            <li>Use portals like <span class="highlight">Internshala, LinkedIn, AngelList, EduVibe</span>.</li>
+            <li>Build a <span class="highlight">personal portfolio website</span> to showcase your work.</li>
+        </ul>
+    </div>
+
+    <div class="tab-content" id="certifications">
+        <h2 class="section-title">Top Certifications</h2>
+        <ul>
+            <li>Google Data Analytics, AWS Solutions Architect, Microsoft Azure, Coursera Specializations.</li>
+            <li>Oracle Java Certification, IBM Data Science Professional, Meta Frontend Developer Certificate.</li>
+        </ul>
+    </div>
+
+    <div class="tab-content" id="success-stories">
+        <h2 class="section-title">Success Stories</h2>
+        <ul>
+            <li>Learn how students landed jobs at Google, Amazon, Infosys from tier-3 colleges by smart preparation.</li>
+            <li>Stories from self-taught coders who made it big via online courses and dedication.</li>
+        </ul>
+    </div>
+
+    <div class="tab-content" id="events">
+        <h2 class="section-title">Events & Webinars</h2>
+        <ul>
+            <li>Participate in EduVibe webinars, alumni talks, and coding competitions every month.</li>
+            <li>Upcoming: <span class="highlight">AI Hackathon 2025, Resume Workshop, Cloud Bootcamp</span>.</li>
+        </ul>
+    </div>
+
+    <div class="tab-content" id="tools">
+        <h2 class="section-title">Career Tools</h2>
+        <ul>
+            <li><span class="highlight">Resume Builder</span> - Design clean & professional resumes instantly.</li>
+            <li><span class="highlight">Roadmap Generator</span> - Plan your learning journey interactively.</li>
+            <li><span class="highlight">Skill Gap Analyzer</span> - Find what you need to learn for your dream job.</li>
+        </ul>
+    </div>
+
+    <div class="video-section">
+        <video controls>
+            <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
+            Your browser does not support HTML5 video.
+        </video>
+    </div>
+
+    <div class="download-section">
+        <a href="/files/career_guide.pdf" download>Download Career Growth PDF</a>
+    </div>
+
+    <script>
+        function openTab(evt, tabId) {
+            const tabcontent = document.querySelectorAll('.tab-content');
+            const tabbtns = document.querySelectorAll('.tab-btn');
+            tabcontent.forEach(tc => tc.classList.remove('active'));
+            tabbtns.forEach(btn => btn.classList.remove('active'));
+            document.getElementById(tabId).classList.add('active');
+            evt.currentTarget.classList.add('active');
+        }
+    </script>
+
+</body>
+</html>
